@@ -1,6 +1,6 @@
 #/bin/sh
 echo "No title" > tmp
-mcedit tmp
+vim tmp
 echo "]title "`head -n1 tmp` > tmp2
 echo "]date" `date +"%d-%b-%Y %H:%m %a"` >> tmp2
 tail -n+2 tmp >> tmp2
