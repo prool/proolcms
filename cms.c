@@ -87,12 +87,12 @@ while(!feof(fp))
     cc=strchr(str,'\r'); if (cc) *cc=0;
     if (str[0]==']')
 	{
-	if (!memcmp(str,"]title",strlen("]title"))) {fprintf(fo,"<h1>%s</h1>\n",str+strlen("]title"));}
+	if (!memcmp(str,"]title",strlen("]title"))) {fprintf(fo,"<h3>%s</h3>\n",str+strlen("]title"));}
 	else if (!memcmp(str,"]date",strlen("]date"))) {fprintf(fo,"<p>Дата %s</p>\n",str+strlen("]date"));}
 	else if (!memcmp(str,"]end",strlen("]end")))
 		{
 		fprintf(fo,"<hr>\n");
-		if(++messages_processed>=MSG_ON_PAGE)
+		if(++messages_processed>MSG_ON_PAGE)
 			{
 			messages_processed=0;
 			page++;
@@ -144,6 +144,8 @@ while(!feof(fp))
 				if (str[0]) fputs(str,fo);
 				}
 			fclose(f2);
+			
+			fprintf(fo,"Page #%i<br>\n<hr>\n", page);
 
 			}
 		}
