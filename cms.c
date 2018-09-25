@@ -29,6 +29,7 @@ char str[STRLEN];
 char new_name[STRLEN];
 char *cc;
 int messages, messages_processed, page;
+int message_counter;
 
 printf("\nProol CMS compile at %s %s\nCurrent date     %s\n\n",__DATE__,__TIME__,ptime());
 
@@ -79,6 +80,8 @@ if (fp==NULL) {printf("can't open text\n"); return 4;}
 messages_processed=0;
 page=0;
 
+message_counter=1;
+
 while(!feof(fp))
     {
     str[0]=0;
@@ -87,12 +90,12 @@ while(!feof(fp))
     cc=strchr(str,'\r'); if (cc) *cc=0;
     if (str[0]==']')
 	{
-	if (!memcmp(str,"]title",strlen("]title"))) {fprintf(fo,"<h3>%s</h3>\n",str+strlen("]title"));}
+	if (!memcmp(str,"]title",strlen("]title"))) {fprintf(fo,"<h3>[%i] %s</h3>\n",message_counter++,str+strlen("]title"));}
 	else if (!memcmp(str,"]date",strlen("]date"))) {fprintf(fo,"<p>Дата %s</p>\n",str+strlen("]date"));}
 	else if (!memcmp(str,"]end",strlen("]end")))
 		{
 		fprintf(fo,"<hr>\n");
-		if(++messages_processed>MSG_ON_PAGE)
+		if(++messages_processed>(MSG_ON_PAGE-1))
 			{
 			messages_processed=0;
 			page++;
